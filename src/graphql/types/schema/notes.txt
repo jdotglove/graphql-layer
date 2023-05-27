@@ -1,0 +1,5 @@
+Should probably come back and make the list of UUIDs
+into lazy loadings of the respective models. WIll probably
+be dependant upon being able to save the data in that form
+but it could also be a pain dependency wise to do it that way.
+Will leave as a list of UUIDs for the time being
