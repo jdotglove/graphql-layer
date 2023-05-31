@@ -5,8 +5,11 @@ import logging
 logger = logging.getLogger("__trackService__")
 
 async def findOneTrackById(trackId: str):
-    track = await database.tracks.find_one({
-        "_id": ObjectId(trackId)
-    })
+    query = {}
+    if trackId != None:
+        query = {
+            "_id": ObjectId(trackId)
+        }
+    track = await database.tracks.find_one(query)
     logger.warning(track)
     return track

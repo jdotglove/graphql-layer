@@ -15,18 +15,23 @@ from .mutations import update_album, update_artist, update_playlist, update_trac
 
 @strawberry.type
 class Query:
-    getOneAlbum: Album = strawberry.field(resolver=get_album)
-    getOneArtist: Artist = strawberry.field(resolver=get_artist)
-    getOnePlaylist: Playlist = strawberry.field(resolver=get_playlist)
-    getOneTrack: Track = strawberry.field(resolver=get_track)
-    getOneUser: User = strawberry.field(resolver=get_user)
+    get_one_album: Album = strawberry.field(resolver=get_album)
+    get_one_artist: Artist = strawberry.field(resolver=get_artist)
+    get_one_playlist: Playlist = strawberry.field(resolver=get_playlist)
+    get_one_track: Track = strawberry.field(resolver=get_track)
+    get_one_user: User = strawberry.field(resolver=get_user)
 
 @strawberry.type
 class Mutation:
-    addOneAlbum: Album = strawberry.mutation(resolver=add_album)
-    addOneArtist: Artist = strawberry.mutation(resolver=add_artist)
-    addOnePlaylist: Playlist = strawberry.mutation(resolver=add_playlist)
-    addOneTrack: Track = strawberry.mutation(resolver=add_track)
-    addOneUser: User = strawberry.mutation(resolver=add_user)
+    add_one_album: Album = strawberry.mutation(resolver=add_album)
+    add_one_artist: Artist = strawberry.mutation(resolver=add_artist)
+    add_one_playlist: Playlist = strawberry.mutation(resolver=add_playlist)
+    add_one_track: Track = strawberry.mutation(resolver=add_track)
+    add_one_user: User = strawberry.mutation(resolver=add_user)
+    update_one_album: Album = strawberry.mutation(resolver=update_album)
+    update_one_artist: Artist = strawberry.mutation(resolver=update_artist)
+    update_one_playlist: Playlist = strawberry.mutation(resolver=update_playlist)
+    update_one_track: Track = strawberry.mutation(resolver=update_track)
+    update_one_user: User = strawberry.mutation(resolver=update_user)
 
 schema = strawberry.Schema(query=Query, mutation=Mutation, subscription=None)

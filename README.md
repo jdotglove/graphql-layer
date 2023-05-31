@@ -12,19 +12,19 @@ uvicorn main:app
 uvicorn main:app --reload
 
 # How to test GraphQL Layer
-# 1. Run Server
-# 2. Navigate to /graphql endpoint
+ 1. Run Server
+ 2. Navigate to /graphql endpoint
 
-# 3a. Run a query of similar composition to the below example
-query {
-    getOneMessage {
+ 3a. Run a query of similar composition to the below example
+q uery {
+    getOneMessage(args) {
         body
     }
 }
 
 # 3b. Run a mutation of similar composition to the below example
 mutation {
-    addOneCustomer(firstName: String, lastName: String, phoneString) {
+    addOneCustomer(args) {
         firstName
         lastName
         phone

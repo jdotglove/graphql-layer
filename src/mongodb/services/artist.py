@@ -5,8 +5,11 @@ import logging
 logger = logging.getLogger("__artistService__")
 
 async def findOneArtistById(artistId: str):
-    artist = await database.artists.find_one({
-        "_id": ObjectId(artistId)
-    })
+    query = {}
+    if artistId != None:
+        query = {
+            "_id": ObjectId(artistId)
+        }
+    artist = await database.artists.find_one(query)
     logger.warning(artist)
     return artist

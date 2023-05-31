@@ -5,8 +5,11 @@ import logging
 logger = logging.getLogger("__playlistService__")
 
 async def findOnePlaylistById(playlistId: str):
-    playlist = await database.playlists.find_one({
-        "_id": ObjectId(playlistId)
-    })
+    query = {}
+    if playlistId != None:
+        query = {
+            "_id": ObjectId(playlistId)
+        }
+    playlist = await database.playlists.find_one(query)
     logger.warning(playlist)
     return playlist

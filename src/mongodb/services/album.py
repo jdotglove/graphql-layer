@@ -5,8 +5,11 @@ import logging
 logger = logging.getLogger("__albumService__")
 
 async def findOneAlbumById(albumId: str):
-    album = await database.albums.find_one({
-        "_id": ObjectId(albumId)
-    })
+    query = {}
+    if albumId != None:
+        query = {
+            "_id": ObjectId(albumId)
+        }
+    album = await database.albums.find_one(query)
     logger.warning(album)
     return album

@@ -1,3 +1,4 @@
+from typing import Optional
 from .types.schema.album import Album
 from .types.schema.artist import Artist
 from .types.schema.playlist import Playlist
@@ -14,35 +15,35 @@ import logging
 import strawberry
 
 async def get_album(
-    albumId: str,
+    albumId: Optional[str],
 ) -> Album:
     print(f"Getting album - with id {albumId}")
     album = await findOneAlbumById(albumId)
     return Album(album)
 
 async def get_artist(
-    artistId: str,
+    artistId: Optional[str],
 ) -> Artist:
     print(f"Getting artist - with id {artistId}")
     artist = await findOneArtistById(artistId)
     return Artist(artist)
 
 async def get_playlist(
-    playlistId: str,
+    playlistId: Optional[str],
 ) -> Playlist:
     print(f"Getting playlist - with id {playlistId}")
     playlist = await findOnePlaylistById(playlistId)
     return Playlist(playlist)
 
 async def get_track(
-    trackId: str,
+    trackId: Optional[str],
 ) -> Track:
     print(f"Getting track - with id {trackId}")
     track = await findOneTrackById(trackId)
     return Track(track)
 
 async def get_user(
-    userId: str,
+    userId: Optional[str] = None,
 ) -> User:
     print(f"Getting user - with id {userId}")
     user = await findOneUserById(userId)
