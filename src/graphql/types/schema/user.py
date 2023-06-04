@@ -1,20 +1,15 @@
-from typing import TYPE_CHECKING, Annotated, List
+from .base import BaseDBModel
+from typing import List
 from uuid import UUID
 
 import strawberry
 
-if TYPE_CHECKING:
-    from .artist import Artist
-    from .playlist import Playlist
-    from .track import Track
-
 @strawberry.type
-class User:
-    # Constructor to be used with db objects
+class User(BaseDBModel):
+    # Constructor to be used with db objects not sure why i need to keep this here
     def __init__(self, user_dict):
         for key in user_dict:
             setattr(self, key, user_dict[key])
-
     # Public Class Fields
     country: str = strawberry.field(
         description="The country of the user."

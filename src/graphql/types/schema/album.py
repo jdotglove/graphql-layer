@@ -1,18 +1,16 @@
-from typing import TYPE_CHECKING, Annotated, Any, List, TypeVar, Dict
+from .base import BaseDBModel
+# from ..directives import Keys
+from typing import Any, List
 from uuid import UUID
 
 import strawberry
 
-if TYPE_CHECKING:
-    from .artist import Artist
-
 @strawberry.type
-class Album:
+class Album(BaseDBModel):
     # Constructor to be used with db objects
     def __init__(self, album_dict):
         for key in album_dict:
             setattr(self, key, album_dict[key])
-
     # Public Class Fields
     albumType: str = strawberry.field(
         description="The type of album."

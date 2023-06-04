@@ -11,8 +11,8 @@ from src import config
 from src.dependencies import get_api_key
 from src.graphql.schema import schema
 
-graphql_app = GraphQLRouter(schema)
-app = FastAPI(docs_url=None, redoc_url=None, openapi_url=None)
+graphql_app = GraphQLRouter(schema=schema, graphiql=True)
+app = FastAPI()
 app.include_router(graphql_app, prefix="/graphql")
 
 

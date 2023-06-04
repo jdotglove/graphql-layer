@@ -1,15 +1,16 @@
-from bson.objectid import ObjectId
-from src.mongodb.db import database
+from ..db import database
 
 import logging
 logger = logging.getLogger("__albumService__")
 
-async def findOneAlbumById(albumId: str):
-    query = {}
-    if albumId != None:
-        query = {
-            "_id": ObjectId(albumId)
-        }
+async def findOneAlbum(query):
     album = await database.albums.find_one(query)
-    logger.warning(album)
     return album
+
+async def insertOneAlbum(albumDoc):
+    artist = await database.albums.insert_one(albumDoc)
+    return artist
+
+async def updateOneAlbum(query, update):
+    await database.albums.update_one(query, update)
+    return True

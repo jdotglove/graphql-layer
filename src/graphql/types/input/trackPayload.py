@@ -1,27 +1,16 @@
-from typing import TYPE_CHECKING, Annotated, List
+from typing import TYPE_CHECKING, Annotated, List, Optional
 from uuid import UUID
 
 import strawberry
 
 @strawberry.input
-class TrackPayloadAlbumInput:
-    albumType: str
-    artists: List[UUID]
-    availableMarkets: List[str]
-    name: str
-    releaseDate: str
-    releaseDatePercision: str
-    spotifyUri: str
-    totalTracks: int
-
-@strawberry.input
 class TrackPayloadInput:
-    album: TrackPayloadAlbumInput
-    artists: List[UUID]
-    availableMarkets: List[str]
-    duration: int
-    explicit: bool
-    name: str
-    popularity: int
-    spotifyUri: str
-    trackNumber: int
+    album: Optional[List[UUID]] = None
+    artists: Optional[List[UUID]] = None
+    availableMarkets: Optional[List[str]] = None
+    duration: Optional[int] = None
+    explicit: Optional[bool] = None
+    name: Optional[str] = None
+    popularity: Optional[int] = None
+    spotifyUri: Optional[str] = None
+    trackNumber: Optional[int] = None

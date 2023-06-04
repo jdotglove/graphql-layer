@@ -1,11 +1,12 @@
-from typing import TYPE_CHECKING, Annotated, List
+from typing import TYPE_CHECKING, Annotated, List, Optional
 from uuid import UUID
 
 import strawberry
 
 @strawberry.input
 class PlaylistPayloadInput:
-    name: str
-    ownerUri: str
-    spotifyUri: str
-    tracks: List[UUID]
+    name: Optional[str]
+    ownerId: Optional[UUID]
+    ownerUri: Optional[str]
+    spotifyUri: Optional[str]
+    tracks: Optional[List[UUID]]

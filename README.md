@@ -16,17 +16,17 @@ uvicorn main:app --reload
  2. Navigate to /graphql endpoint
 
  3a. Run a query of similar composition to the below example
-q uery {
-    getOneMessage(args) {
-        body
+    query {
+        getOneMessage(args) {
+            body
+        }
     }
-}
 
-# 3b. Run a mutation of similar composition to the below example
-mutation {
-    addOneCustomer(args) {
-        firstName
-        lastName
-        phone
+ 3b. Run a mutation of similar composition to the below example
+    mutation {
+        addOneCustomer(args) {
+            firstName
+            lastName
+            phone
+        }
     }
-}

@@ -8,10 +8,10 @@ from .types.schema.artist import Artist
 from .types.schema.playlist import Playlist
 from .types.schema.track import Track
 from .types.schema.user import User
+from .types.output.defaultResponse import DefaultResponseObject
 
 from .queries import get_album, get_artist, get_playlist, get_track, get_user
-from .mutations import add_album, add_artist, add_playlist, add_track, add_user
-from .mutations import update_album, update_artist, update_playlist, update_track, update_user
+from .mutations import add_album, add_artist, add_playlist, add_track, add_user, update_album, update_artist, update_playlist, update_track, update_user
 
 @strawberry.type
 class Query:
@@ -28,10 +28,10 @@ class Mutation:
     add_one_playlist: Playlist = strawberry.mutation(resolver=add_playlist)
     add_one_track: Track = strawberry.mutation(resolver=add_track)
     add_one_user: User = strawberry.mutation(resolver=add_user)
-    update_one_album: Album = strawberry.mutation(resolver=update_album)
-    update_one_artist: Artist = strawberry.mutation(resolver=update_artist)
-    update_one_playlist: Playlist = strawberry.mutation(resolver=update_playlist)
-    update_one_track: Track = strawberry.mutation(resolver=update_track)
-    update_one_user: User = strawberry.mutation(resolver=update_user)
+    update_one_album: DefaultResponseObject = strawberry.mutation(resolver=update_album)
+    update_one_artis: DefaultResponseObject = strawberry.mutation(resolver=update_artist)
+    update_one_playlist: DefaultResponseObject = strawberry.mutation(resolver=update_playlist)
+    update_one_track: DefaultResponseObject = strawberry.mutation(resolver=update_track)
+    update_one_user: DefaultResponseObject = strawberry.mutation(resolver=update_user)
 
 schema = strawberry.Schema(query=Query, mutation=Mutation, subscription=None)
