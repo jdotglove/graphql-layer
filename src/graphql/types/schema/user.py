@@ -1,10 +1,11 @@
 from .base import BaseDBModel
 from typing import List
 from uuid import UUID
+from ..directives import Keys
 
 import strawberry
 
-@strawberry.type
+@strawberry.type(directives=[Keys(fields="_id")])
 class User(BaseDBModel):
     # Constructor to be used with db objects not sure why i need to keep this here
     def __init__(self, user_dict):

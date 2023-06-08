@@ -1,5 +1,4 @@
-import asyncio
-from motor.motor_asyncio import AsyncIOMotorClient
+import pymongo
 
 import certifi
 from src.config import AUDIONEST_MONGO_URI
@@ -7,7 +6,7 @@ from src.config import AUDIONEST_MONGO_URI
 ca = certifi.where()
 
 # instantiate mongo client
-client = AsyncIOMotorClient(AUDIONEST_MONGO_URI, tlsCAFile=ca)
+client = pymongo.MongoClient(AUDIONEST_MONGO_URI, tlsCAFile=ca)
 database = client["mainStack"]
 
 # Send a ping to confirm a successful connection

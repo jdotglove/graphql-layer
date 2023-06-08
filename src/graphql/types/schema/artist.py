@@ -1,10 +1,10 @@
 from .base import BaseDBModel
-# from ..directives import Keys
+from ..directives import Keys
 from typing import List
 
 import strawberry
 
-@strawberry.type
+@strawberry.type(directives=[Keys(fields="_id")])
 class Artist(BaseDBModel):
     # Constructor to be used with db objects
     def __init__(self, artist_dict):

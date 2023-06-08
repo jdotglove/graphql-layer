@@ -1,11 +1,11 @@
 from .base import BaseDBModel
-# from ..directives import Keys
+from ..directives import Keys
 from typing import Any, List
 from uuid import UUID
 
 import strawberry
 
-@strawberry.type
+@strawberry.type(directives=[Keys(fields="_id")])
 class Album(BaseDBModel):
     # Constructor to be used with db objects
     def __init__(self, album_dict):

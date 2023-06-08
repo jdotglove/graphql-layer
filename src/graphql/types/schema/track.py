@@ -1,9 +1,55 @@
 from .base import BaseDBModel
-# from ..directives import Keys
+from ..directives import Keys
 from typing import List
 from uuid import UUID
+from ..directives import Keys
 
 import strawberry
+
+@strawberry.interface(directives=[Keys(fields="spotifyUri")])
+class TrackAudioFeatures(BaseDBModel):
+    acousticness: float = strawberry.field(
+        description="Acousticness feature of track."
+    )
+    analysisUrl: str = strawberry.field(
+        description="Analysis url of track."
+    )
+    danceability: float = strawberry.field(
+        description="Danceability feature of track."
+    )
+    energy: float = strawberry.field(
+        description="Energy feature of track."
+    )
+    instrumentalness: float = strawberry.field(
+        description="Instrumentalness feature of track."
+    )
+    key: int = strawberry.field(
+        description="Key of track."
+    )
+    liveness: float = strawberry.field(
+        description="Liveness feature of track."
+    )
+    loudness: float = strawberry.field(
+        description="Loudness feature of track."
+    )
+    mode: int = strawberry.field(
+        description="Mode feature of track."
+    )
+    speechiness: float = strawberry.field(
+        description="Speechiness feature of track."
+    )
+    spotifyUri: str = strawberry.field(
+        description="Spotfy uri track."
+    )
+    tempo: float = strawberry.field(
+        description="Tempo feature of track."
+    )
+    timeSignature: int = strawberry.field(
+        description="time signature of track."
+    )
+    valence: float = strawberry.field(
+        description="Valence feature of track."
+    )
 
 @strawberry.type
 class Track(BaseDBModel):
@@ -16,13 +62,16 @@ class Track(BaseDBModel):
         description="Id of the track album."
     )
     artists: List[UUID] = strawberry.field(
-        description="The list of track artists ids."
+        description="The list of track artists ids and names."
+    )
+    audioFeatures: TrackAudioFeatures = strawberry.field(
+        description="THe audio features of the track."
     )
     availableMarkets: List[str] = strawberry.field(
         description="The list of available markets."
     )
-    duration: int = strawberry.field(
-        description="The duration of the track."
+    durationMs: int = strawberry.field(
+        description="The duration (in milliseconds) of the track."
     )
     explicit: bool = strawberry.field(
         description="Whether or not the track is explicit."
