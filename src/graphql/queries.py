@@ -105,9 +105,7 @@ def get_one_track(
 
     print(f"Getting track - with {dbQuery}")
     track = findOneTrack(dbQuery)
-    return Track({
-        "name": "hello"
-    })
+    return Track(track)
 
 def get_many_tracks(
     query: GetManyUsersQueryInput,

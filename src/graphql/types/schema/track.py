@@ -1,13 +1,13 @@
 from .base import BaseDBModel
 from ..directives import Keys
-from typing import List
+from typing import List, Type
 from uuid import UUID
 from ..directives import Keys
 
 import strawberry
 
-@strawberry.interface(directives=[Keys(fields="spotifyUri")])
-class TrackAudioFeatures(BaseDBModel):
+@strawberry.type
+class TrackAudioFeatures:
     acousticness: float = strawberry.field(
         description="Acousticness feature of track."
     )
@@ -51,12 +51,13 @@ class TrackAudioFeatures(BaseDBModel):
         description="Valence feature of track."
     )
 
-@strawberry.type
+@strawberry.type(directives=[Keys(fields="_id")])
 class Track(BaseDBModel):
     # Constructor to be used with db objects
     def __init__(self, track_dict):
         for key in track_dict:
             setattr(self, key, track_dict[key])
+
     # Public Class Fields      
     album: UUID = strawberry.field(
         description="Id of the track album."
@@ -64,9 +65,9 @@ class Track(BaseDBModel):
     artists: List[UUID] = strawberry.field(
         description="The list of track artists ids and names."
     )
-    audioFeatures: TrackAudioFeatures = strawberry.field(
-        description="THe audio features of the track."
-    )
+    # audioFeatures: TrackAudioFeatures = strawberry.field(
+    #     description="THe audio features of the track."
+    # )
     availableMarkets: List[str] = strawberry.field(
         description="The list of available markets."
     )
