@@ -8,6 +8,11 @@ import strawberry
 
 @strawberry.type
 class TrackAudioFeatures:
+    # Constructor to be used with db objects
+    def __init__(self, audio_features_dict):
+        for key in audio_features_dict:
+            setattr(self, key, audio_features_dict[key])
+
     acousticness: float = strawberry.field(
         description="Acousticness feature of track."
     )
@@ -56,7 +61,10 @@ class Track(BaseDBModel):
     # Constructor to be used with db objects
     def __init__(self, track_dict):
         for key in track_dict:
-            setattr(self, key, track_dict[key])
+            if key == 'audioFeatures':
+                setattr(self, key, TrackAudioFeatures(track_dict[key]))    
+            else:
+                setattr(self, key, track_dict[key])
 
     # Public Class Fields      
     album: UUID = strawberry.field(
@@ -65,9 +73,9 @@ class Track(BaseDBModel):
     artists: List[UUID] = strawberry.field(
         description="The list of track artists ids and names."
     )
-    # audioFeatures: TrackAudioFeatures = strawberry.field(
-    #     description="THe audio features of the track."
-    # )
+    audioFeatures: TrackAudioFeatures = strawberry.field(
+        description="THe audio features of the track."
+    )
     availableMarkets: List[str] = strawberry.field(
         description="The list of available markets."
     )

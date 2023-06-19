@@ -11,6 +11,7 @@ class Album(BaseDBModel):
     def __init__(self, album_dict):
         for key in album_dict:
             setattr(self, key, album_dict[key])
+
     # Public Class Fields
     albumType: str = strawberry.field(
         description="The type of album."

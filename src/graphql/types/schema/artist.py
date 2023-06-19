@@ -11,6 +11,7 @@ class Artist(BaseDBModel):
     def __init__(self, artist_dict):
         for key in artist_dict:
             setattr(self, key, artist_dict[key])
+
     # Public Class Fields
     albums: List[UUID] = strawberry.field(
         description="The list of albums for an artist."
