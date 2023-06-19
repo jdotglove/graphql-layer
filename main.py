@@ -1,30 +1,21 @@
 # Module used as main code executor
 from fastapi import Security, Depends, FastAPI, HTTPException, Response
 from fastapi.security.api_key import APIKeyQuery, APIKeyCookie, APIKeyHeader, APIKey
-from fastapi.openapi.docs import get_swagger_ui_html
-from fastapi.openapi.utils import get_openapi
+# from fastapi.openapi.docs import get_swagger_ui_html
+# from fastapi.openapi.utils import get_openapi
 from starlette.status import HTTP_403_FORBIDDEN
-from starlette.responses import RedirectResponse, JSONResponse
+# from starlette.responses import RedirectResponse, JSONResponse
 from strawberry.fastapi import GraphQLRouter
 
 from src import config
+from src.dependencies import get_api_key
 from src.graphql.schema import schema
 
-api_key_header = APIKeyHeader(name=config.API_KEY_NAME, auto_error=False)
-
-graphql_app = GraphQLRouter(schema)
-app = FastAPI(docs_url=None, redoc_url=None, openapi_url=None)
+graphql_app = GraphQLRouter(schema=schema, graphiql=True)
+app = FastAPI()
 app.include_router(graphql_app, prefix="/graphql")
 
-async def get_api_key(
-    api_key_header: str = Security(api_key_header),
-):
-    if api_key_header == config.API_KEY:
-        return api_key_header
-    else:
-        raise HTTPException(
-            status_code=HTTP_403_FORBIDDEN, detail="Could not validate credentials"
-        )
+
 
 # Order matters for route declaration
 

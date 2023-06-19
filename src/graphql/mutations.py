@@ -1,104 +1,153 @@
+from bson.objectid import ObjectId
 from .types.schema.album import Album
 from .types.schema.artist import Artist
 from .types.schema.playlist import Playlist
 from .types.schema.track import Track
 from .types.schema.user import User
-from src.mongodb.services.album import findOneAlbumById
-from .types.input.albumPayload import AlbumPayloadInput
-from .types.input.artistPayload import ArtistPayloadInput
-from .types.input.playlistPayload import PlaylistPayloadInput
-from .types.input.trackPayload import TrackPayloadInput
-from .types.input.userPayload import UserPayloadInput
+from src.mongodb.services.album import insertOneAlbum, updateOneAlbum
+from src.mongodb.services.artist import insertOneArtist, updateOneArtist
+from src.mongodb.services.playlist import insertOnePlaylist, updateOnePlaylist
+from src.mongodb.services.track import insertOneTrack, updateOneTrack
+from src.mongodb.services.user import insertOneUser, updateOneUser
+from .types.input.album import AddOneAlbumPayloadInput, UpdateOneAlbumPayloadInput
+from .types.input.artist import AddOneArtistPayloadInput, UpdateOneArtistPayloadInput
+from .types.input.playlist import AddOnePlaylistPayloadInput, UpdateOnePlaylistPayloadInput
+from .types.input.track import AddOneTrackPayloadInput, UpdateOneTrackPayloadInput
+from .types.input.user import AddOneUserPayloadInput, UpdateOneUserPayloadInput
+from .types.output.defaultResponse import DefaultResponseObject
+from src.utils.dict import filterOutDictNoneValues
 
-from typing import Any, List
+from typing import Annotated, Any, List
 
 import logging
 import strawberry
 
-# @strawberry.input
-# class AlbumPayloadInput:
-#     albumType: str
-#     # artists: List[Annotated["Artist", strawberry.lazy("src.graphql.types.schema.artist")]]
-#     availableMarkets: List[str]
-#     name: str
-#     releaseDate: str
-#     releaseDatePercision: str
-#     spotifyUri: str
-#     totalTracks: int
-
 # ALBUM MUTATIONS
-async def add_album(
-    albumPayload: AlbumPayloadInput,
-) -> Album:
+def add_one_album(
+    input: AddOneAlbumPayloadInput = strawberry.argument(
+        description="Input to be used to create a new album document."
+    )
+):
     print(f"Adding album - with payload {albumPayload}")
-    album = await insertOneAlbum(albumPayload)
+    album = insertOneAlbum(albumPayload)
     return Album(album)
-async def update_album(
-    albumId: str,
-    albumPayload: AlbumPayloadInput #TODO: fix typing
-) -> None:
-    print(f"Updating album {albumId} - with payload {albumPayload}")
-    await updateOneAlbum(albumId, albumPayload)
-    return
+
+def update_one_album(
+    input: UpdateOneAlbumPayloadInput = strawberry.argument(
+        description="Input to be used to locate and update an an album document."
+    )
+):
+    formattedAlbumPayload = filterOutDictNoneValues(strawberry.asdict(input.albumPayload))
+    print(f"Updating album {input.albumId} - with payload {formattedAlbumPayload}")
+    updateOneAlbum({
+        "_id": ObjectId(albumId),
+    }, {
+        "$set": formattedAlbumPayload,
+    })
+    return DefaultResponseObject({
+        "success": True,
+    })
 
 # ARTIST MUTATIONS
-async def add_artist(
-    artistPayload: ArtistPayloadInput,
-) -> Artist:
-    print(f"Adding artist - with payload {artistPayload}")
-    artist = await insertOneArtist(artistPayload)
+def add_one_artist(
+    input: AddOneArtistPayloadInput = strawberry.argument(
+        description="Input to be used to create a new artist document."
+    )
+):
+    print(f"Adding artist - with payload {input.artistPayload}")
+    artist = insertOneArtist(input.artistPayload)
     return Artist(artist)
-async def update_artist(
-    artistId: str,
-    artistPayload: ArtistPayloadInput #TODO: fix typing
-) -> None:
-    print(f"Updating artist {artistId} - with payload {artistPayload}")
-    await updateOneArtist({
-        "_id": artistId
-    }, artistPayload)
-    return
+
+def update_one_artist(
+    input: UpdateOneArtistPayloadInput = strawberry.argument(
+        description="Input to be used to locate and update an artist document."
+    )
+):
+    formattedArtistPayload = filterOutDictNoneValues(strawberry.asdict(input.artistPayload))
+    print(f"Updating artist {input.artistId} - with formatted payload {formattedArtistPayload}")
+    updateOneArtist({
+        "_id": ObjectId(input.artistId),
+    }, {
+        "$set": input.formattedArtistPayload,
+    })
+    return DefaultResponseObject({
+        "success": True,
+    })
 
 # PLAYLIST MUTATIONS
-async def add_playlist(
-    playlistPayload: PlaylistPayloadInput,
-) -> Playlist:
-    print(f"Adding playlist - with payload {playlistPayload}")
-    playlist = await insertOnePlaylist(playlistPayload)
+def add_one_playlist(
+    input: AddOnePlaylistPayloadInput = strawberry.argument(
+        description="Input to be used to create a new playlist document."
+    )
+):
+    print(f"Adding playlist - with payload {input.playlistPayload}")
+    playlist = insertOnePlaylist(input.playlistPayload)
     return Playlist(playlist)
-async def update_playlist(
-    playlistId: str,
-    playlistPayload: PlaylistPayloadInput #TODO: fix typing
-) -> None:
-    print(f"Updating playlist {playlistId} - with payload {playlistPayload}")
-    await updateOnePlaylist(playlistId, playlistPayload)
-    return
+
+def update_one_playlist(
+    input: UpdateOnePlaylistPayloadInput = strawberry.argument(
+        description="Input to be used to locate and update a playlist document."
+    )
+):
+    formattedPlaylistPayload = filterOutDictNoneValues(strawberry.asdict(input.playlistPayload))
+    print(f"Updating playlist {input.playlistId} - with formatted payload {formattedPlaylistPayload}")
+    updateOnePlaylist({
+        "_id": ObjectId(input.playlistId),
+    }, {
+        "$set": formattedPlaylistPayload,
+    })
+    return DefaultResponseObject({
+        "success": True,
+    })
 
 # TRACK MUTATIONS
-async def add_track(
-    trackPayload: TrackPayloadInput #TODO: fix typing
-) -> Track:
-    print(f"Adding track - with payload {trackPayload}")
-    track = await insertOneTrack(trackPayload)
+def add_one_track(
+    input: AddOneTrackPayloadInput = strawberry.argument(
+        description="Input to be used to create a new track document."
+    )
+):
+    print(f"Adding track - with payload {input.trackPayload}")
+    track = insertOneTrack(input.trackPayload)
     return Track(track)
-async def update_track(
-    trackId: str,
-    trackPayload: TrackPayloadInput #TODO: fix typing
-) -> None:
-    print(f"Updating track {trackId} - with payload {trackPayload}")
-    await updateOneTrack(trackId, trackPayload)
-    return
+
+def update_one_track(
+    input: UpdateOneTrackPayloadInput = strawberry.argument(
+        description="Input to be used to locate and update a track document."
+    )
+):
+    formattedTrackPayload = filterOutDictNoneValues(strawberry.asdict(input.trackPayload))
+    print(f"Updating track {input.trackId} - with formatted payload {formattedTrackPayload}")
+    updateOneTrackById({
+        "_id": ObjectId(input.trackId),
+    }, {
+        "$set": formattedTrackPayload,
+    })
+    return DefaultResponseObject({
+        "success": True,
+    })
 
 # USER MUTATIONS
-async def add_user(
-    userPayload: UserPayloadInput #TODO: fix typing
-) -> User:
-    print(f"Adding user - with payload {userPayload}")
-    user = await insertOneUser(userPayload)
+def add_one_user(
+    input: AddOneUserPayloadInput = strawberry.argument(
+        description="Input to be used to create a new user document."
+    )
+):
+    print(f"Adding user - with payload {input.userPayload}")
+    user = insertOneUser(input.userPayload)
     return User(user)
-async def update_user(
-    userId: str,
-    userPayload: UserPayloadInput #TODO: fix typing
-) -> None:
-    print(f"Updating user {userId} - with payload {userPayload}")
-    await updateOneUser(userPayload)
-    return
+
+def update_one_user(
+    input: UpdateOneUserPayloadInput = strawberry.argument(
+        description="Input to be used to locate and update a user document."
+    )
+):
+    formattedUserPayload = filterOutDictNoneValues(strawberry.asdict(input. userPayload))
+    print(f"Updating user {input.userId} - with formatted payload {formattedUserPayload}")
+    updateOneUser({
+        "_id": ObjectId(input.userId),
+    }, {
+        "$set": formattedUserPayload,
+    })
+    return DefaultResponseObject({
+        "success": True,
+    })
