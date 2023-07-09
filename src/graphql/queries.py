@@ -34,17 +34,19 @@ def get_one_album(
     album = findOneAlbum(dbQuery)
     return Album(album)
 
-# def get_albums(
-#     query: GetArtistQueryInput,
-# ):
-#     # query = {}
-#     # if albumId != None:
-#     #     query = {
-#     #         "_id": ObjectId(albumId)
-#     #     }
-#     # print(f"Getting album - with {query}")
-#     # album = await findOneAlbum(query)
-#     return
+def get_many_albums(
+    query: GetManyAlbumsQueryInput,
+):
+    dbQuery = {}
+    if len(query.albumIds) != 0:
+        dbQuery = {
+            "_id": {
+                "$in": query.albumIds
+            }
+        }
+
+    print(f"Getting albums - with {dbQuery}")
+    return findManyAlbums(dbQuery)
 
 def get_one_artist(
     query: GetOneArtistQueryInput,
@@ -58,17 +60,19 @@ def get_one_artist(
     artist = findOneArtist(dbQuery)
     return Artist(artist)
 
-# def get_artists(
-#     artistIds: List[str],
-# ):
-#     # query = {}
-#     # if artistId != None:
-#     #     query = {
-#     #         "_id": ObjectId(artistId)
-#     #     }
-#     # print(f"Getting artist - with {query}")
-#     # artist = await findOneArtist(query)
-#     return
+def get_many_artists(
+    query: GetManyArtistsQueryInput,
+):
+    dbQuery = {}
+    if len(query.artistIds) != 0:
+        dbQuery = {
+            "_id": {
+                "$in": query.artistIds
+            }
+        }
+
+    print(f"Getting artists - with {dbQuery}")
+    return findManyArtists(dbQuery)
 
 def get_one_playlist(
     query: GetOnePlaylistQueryInput,
@@ -82,17 +86,20 @@ def get_one_playlist(
     playlist = findOnePlaylist(dbQuery)
     return Playlist(playlist)
 
-# def get_playlists(
-#     playlistIds: List[str],
-# ):
-#     # query = {}
-#     # if playlistId != None:
-#     #     query = {
-#     #         "_id": ObjectId(playlistId)
-#     #     }
-#     # print(f"Getting playlist - with {query}")
-#     # playlist = await findOnePlaylist(query)
-#     return
+def get_many_playlists(
+    query: GetManyPlaylistsQueryInput,
+):
+    dbQuery = {}
+    if len(query.playlistIds) != 0:
+        dbQuery = {
+            "_id": {
+                "$in": query.playlistIds
+            }
+        }
+
+    print(f"Getting playlists - with {dbQuery}")
+    return findManyPlaylists(dbQuery)
+
 
 def get_one_track(
     query: GetOneTrackQueryInput,
@@ -108,7 +115,7 @@ def get_one_track(
     return Track(track)
 
 def get_many_tracks(
-    query: GetManyUsersQueryInput,
+    query: GetManyTracksQueryInput,
 ):
     dbQuery = {}
     if len(query.trackIds) != 0:
@@ -134,15 +141,16 @@ def get_one_user(
     user = findOneUser(dbQuery)
     return User(user)
 
-# def get_users(
-#     userIds: List[str],
-# ):
-#     # query = {}
-#     # if userId != None:
-#     #     query = {
-#     #         "_id": ObjectId(userId)
-#     #     }
-#     # print(f"Getting user - with {query}")
-#     # user = await findOneUser(query)
-#     # print(f"User: {user}")
-#     return
+def get_many_users(
+    query: GetManyUsersQueryInput,
+):
+    dbQuery = {}
+    if len(query.userIds) != 0:
+        dbQuery = {
+            "_id": {
+                "$in": query.userIds
+            }
+        }
+
+    print(f"Getting users - with {dbQuery}")
+    return findManyUsers(dbQuery)

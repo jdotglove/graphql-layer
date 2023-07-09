@@ -4,20 +4,16 @@ import logging
 logger = logging.getLogger("__trackService__")
 
 def findOneTrack(query):
-    track = database.tracks.find_one(query)
-    return track
+    return database.tracks.find_one(query)
 
 def findManyTracks(query):
-    tracks = database.tracks.find(query)
-    return tracks
+    return database.tracks.find(query)
 
-# async def findOneTrackAndUpdate(query, update):
-#     track = await database.tracks.find_one_and_update(query, update)
+def findOneTrackAndUpdate(query, update):
+    return database.tracks.find_one_and_update(query, update)
 
 def insertOneTrack(trackDoc):
-    track = database.tracks.insert_one(trackDoc)
-    return track
+    return database.tracks.insert_one(trackDoc)
 
 def updateOneTrack(query, update):
-    database.tracks.update_one(query, update)
-    return True
+    return database.tracks.update_one(query, update)
