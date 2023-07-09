@@ -11,6 +11,7 @@ class User(BaseDBModel):
     def __init__(self, user_dict):
         for key in user_dict:
             setattr(self, key, user_dict[key])
+
     # Public Class Fields
     country: str = strawberry.field(
         description="The country of the user."

@@ -4,17 +4,13 @@ import logging
 logger = logging.getLogger("__userService__")
 
 def findOneUser(query):
-    user = database.users.find_one(query)
-    return user
+    return database.users.find_one(query)
 
 def findOneUserAndUpdate(query, update):
-    database.users.find_one_and_update(query, update)
-    return True
+    return database.users.find_one_and_update(query, update)
 
 def insertOneUser(userDoc):
-    user = database.users.insert_one(userDoc)
-    return user
+    return database.users.insert_one(userDoc)
 
 def updateOneUser(query, update):
-    database.users.update_one(query, update)
-    return
+    return database.users.update_one(query, update)

@@ -4,17 +4,13 @@ import logging
 logger = logging.getLogger("__albumService__")
 
 def findOneAlbum(query):
-    album = database.albums.find_one(query)
-    return album
+    return database.albums.find_one(query)
 
-# async def findOneAlbumAndUpdate(query, update):
-#     album = await database.albums.find_one_and_update(query, update)
-#     return album
+def findOneAlbumAndUpdate(query, update):
+    return database.albums.find_one_and_update(query, update)
 
 def insertOneAlbum(albumDoc):
-    album = database.albums.insert_one(albumDoc)
-    return album
+    return database.albums.insert_one(albumDoc)
 
 def updateOneAlbum(query, update):
-    database.albums.update_one(query, update)
-    return True
+    return database.albums.update_one(query, update)
